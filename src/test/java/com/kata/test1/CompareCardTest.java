@@ -1,10 +1,9 @@
-package com.kata;
+package com.kata.test1;
 
 import org.junit.jupiter.api.Test;
 
-import static com.kata.CardColor.*;
-import static com.kata.CardNumber.*;
-import static com.kata.CardNumber.THREE;
+import static com.kata.test1.CardColor.*;
+import static com.kata.test1.CardNumber.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CompareCardTest {
