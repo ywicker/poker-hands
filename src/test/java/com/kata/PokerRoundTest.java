@@ -20,7 +20,7 @@ public class PokerRoundTest {
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
             // when
-            var result = pokerRound.result();
+            var result = pokerRound.hightCardResult();
 
             // then
             assertThat(result).isEqualTo(BLACK_WINS);
@@ -34,7 +34,7 @@ public class PokerRoundTest {
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
             // when
-            var result = pokerRound.result();
+            var result = pokerRound.hightCardResult();
 
             // then
             assertThat(result).isEqualTo(WHITE_WINS);
@@ -48,7 +48,7 @@ public class PokerRoundTest {
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
             // when
-            var result = pokerRound.result();
+            var result = pokerRound.hightCardResult();
 
             // then
             assertThat(result).isEqualTo(EGALITY);

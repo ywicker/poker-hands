@@ -4,6 +4,10 @@ import static com.kata.PokerResult.*;
 
 public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
     public PokerResult result() {
+        return hightCardResult();
+    }
+
+    public PokerResult hightCardResult() {
         var maxValueBlackPokerHand = blackPokerHand.maxCardValue();
         var maxValueWhitePokerHand = whitePokerHand.maxCardValue();
 
