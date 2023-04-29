@@ -1,21 +1,20 @@
 package com.kata;
 
-import java.util.*;
+import java.util.Arrays;
 
 import static com.kata.PokerResult.*;
 
 public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
     public PokerResult result() {
-        int maxValueBlackPokerHand = Arrays.stream(blackPokerHand.cards())
-                .map(Card::i).max(Integer::compareTo).get();
-        int maxValueWhitePokerHand = Arrays.stream(whitePokerHand.cards())
-                .map(Card::i).max(Integer::compareTo).get();
+        var maxValueBlackPokerHand = Arrays.stream(blackPokerHand.cards())
+                .max(Card::compareTo).get();
+        var maxValueWhitePokerHand = Arrays.stream(whitePokerHand.cards())
+                .max(Card::compareTo).get();
 
-        if(maxValueBlackPokerHand < maxValueWhitePokerHand) {
-            return WHITE_WINS;
-        } else if (maxValueBlackPokerHand > maxValueWhitePokerHand) {
-            return BLACK_WINS;
+        switch (maxValueBlackPokerHand.compareTo(maxValueWhitePokerHand)) {
+            case 1: return BLACK_WINS;
+            case -1: return WHITE_WINS;
+            default: return EGALITY;
         }
-        return EGALITY;
     }
 }

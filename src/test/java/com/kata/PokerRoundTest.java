@@ -3,6 +3,7 @@ package com.kata;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static com.kata.CardValue.*;
 import static com.kata.PokerResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,8 +15,8 @@ public class PokerRoundTest {
         @Test
         void should_black_poker_hand_wins(){
             // given
-            var blackPokerHand = new PokerHand(new Card(3));
-            var whitePokerHand = new PokerHand(new Card(2));
+            var blackPokerHand = new PokerHand(new Card(THREE));
+            var whitePokerHand = new PokerHand(new Card(TWO));
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
             // when
@@ -28,8 +29,8 @@ public class PokerRoundTest {
         @Test
         void should_white_poker_hand_wins() {
             // given
-            var blackPokerHand = new PokerHand(new Card(3));
-            var whitePokerHand = new PokerHand(new Card(4));
+            var blackPokerHand = new PokerHand(new Card(THREE));
+            var whitePokerHand = new PokerHand(new Card(FOUR));
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
             // when
@@ -42,8 +43,8 @@ public class PokerRoundTest {
         @Test
         void should_egality() {
             // given
-            var blackPokerHand = new PokerHand(new Card(4));
-            var whitePokerHand = new PokerHand(new Card(4));
+            var blackPokerHand = new PokerHand(new Card(FOUR));
+            var whitePokerHand = new PokerHand(new Card(FOUR));
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
             // when
