@@ -1,9 +1,6 @@
 package com.kata;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public record PokerHand(Card... cards) {
@@ -18,5 +15,9 @@ public record PokerHand(Card... cards) {
                 .map(Map.Entry::getKey)
                 .map(Pair::new)
                 .collect(Collectors.toSet());
+    }
+
+    public Optional<CardValue> maxPairValue() {
+        return pairs().stream().map(Pair::cardValue).max(CardValue::compareTo);
     }
 }
