@@ -21,11 +21,13 @@ public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
         return hightCardResult(maxValueBlackPokerHand, maxValueWhitePokerHand);
     }
 
-    private PokerResult hightCardResult(CardValue maxValueBlackPokerHand, CardValue maxValueWhitePokerHand) {
-        return switch (maxValueBlackPokerHand.compareTo(maxValueWhitePokerHand)) {
-            case 1 -> BLACK_WINS;
-            case -1 -> WHITE_WINS;
-            default -> EGALITY;
-        };
+    private PokerResult hightCardResult(CardValue blackCardValue, CardValue whiteCardValue) {
+        var compare = blackCardValue.compareTo(whiteCardValue);
+        if(compare > 0) {
+            return BLACK_WINS;
+        } else if (compare < 0) {
+            return WHITE_WINS;
+        }
+        return EGALITY;
     }
 }

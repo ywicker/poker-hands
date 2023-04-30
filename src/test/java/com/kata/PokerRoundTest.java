@@ -98,4 +98,21 @@ public class PokerRoundTest {
         }
     }
 
+    @Nested
+    class TwoPairWins {
+
+        @Test
+        void should_black_poker_hand_wins_with_pair(){
+            // given
+            var blackPokerHand = new PokerHand(new Card(FIVE), new Card(FIVE), new Card(TWO));
+            var whitePokerHand = new PokerHand(new Card(THREE), new Card(THREE), new Card(TWO), new Card(TWO));
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(WHITE_WINS);
+        }
+    }
 }
