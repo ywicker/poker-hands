@@ -17,10 +17,10 @@ public record PokerHand(List<Card> cards) {
         return new Pairs(pairValues);
     }
 
-    public PokerHand withoutCardValues(CardValue cardValue) {
+    public PokerHand withoutCardValues(Set<CardValue> cardValues) {
         return new PokerHand(
                 cards.stream()
-                .filter(card -> !cardValue.equals(card.value()))
+                .filter(card -> !cardValues.contains(card.value()))
                         .toList()
         );
     }
