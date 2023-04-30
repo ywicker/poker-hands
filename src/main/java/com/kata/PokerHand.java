@@ -1,9 +1,11 @@
 package com.kata;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public record PokerHand(List<Card> cards) {
+public record PokerHand(List<Card> cards) implements Comparable<PokerHand> {
     public CardValue maxCardValue() {
         return cards.stream().max(Card::compareTo)
                 .orElseThrow().value();
@@ -27,5 +29,29 @@ public record PokerHand(List<Card> cards) {
 
     public PokerHand withoutPairs() {
         return withoutCardValues(this.pairs().cardValues());
+    }
+
+    @Override
+    public int compareTo(PokerHand pokerHand) {
+        var comparePairs = this.pairs().compareTo(pokerHand.pairs());
+        if(comparePairs != 0) {
+            return comparePairs;
+        }
+
+        var blackPokerHandNoPairs = this.withoutPairs();
+        var whitePokerHandNoPairs = pokerHand.withoutPairs();
+
+        if(blackPokerHandNoPairs.cards().isEmpty() && whitePokerHandNoPairs.cards().isEmpty()) {
+            return 0;
+        }
+
+        var compareCard = blackPokerHandNoPairs.maxCardValue().compareTo(whitePokerHandNoPairs.maxCardValue());
+        if(compareCard == 0) {
+            return blackPokerHandNoPairs.withoutCardValues(Set.of(blackPokerHandNoPairs.maxCardValue()))
+                            .compareTo(
+                                    whitePokerHandNoPairs.withoutCardValues(Set.of(whitePokerHandNoPairs.maxCardValue()))
+                            );
+        }
+        return compareCard;
     }
 }
