@@ -155,6 +155,32 @@ public class PokerRoundTest {
             // then
             assertThat(result).isEqualTo(WHITE_WINS);
         }
+        @Test
+        void should_egality_with_two_pairs(){
+            // given
+            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(THREE), new Card(THREE));
+            var whitePokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(THREE), new Card(THREE));
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(EGALITY);
+        }
+        @Test
+        void should_white_poker_hand_wins_with_greater_last_card(){
+            // given
+            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(THREE), new Card(THREE), new Card(SIX));
+            var whitePokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(THREE), new Card(THREE), new Card(AS));
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(WHITE_WINS);
+        }
     }
 
     public static PokerHand pokerHand(Card... cards) {

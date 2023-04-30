@@ -4,6 +4,10 @@ import static com.kata.PokerResult.*;
 
 public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
     public PokerResult result() {
+        if(blackPokerHand.cards().isEmpty() && whitePokerHand.cards().isEmpty()) {
+            return EGALITY;
+        }
+
         var blackPokerHandPairs = blackPokerHand.pairs();
         var whitePokerHandPairs = whitePokerHand.pairs();
         var compare = Integer.compare(blackPokerHandPairs.size(), whitePokerHandPairs.size());
