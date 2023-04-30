@@ -24,4 +24,8 @@ public record PokerHand(List<Card> cards) {
                         .toList()
         );
     }
+
+    public PokerHand withoutPairs() {
+        return withoutCardValues(this.pairs().cardValues());
+    }
 }
