@@ -1,5 +1,6 @@
 package com.kata;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -180,6 +181,24 @@ public class PokerRoundTest {
 
             // then
             assertThat(result).isEqualTo(WHITE_WINS);
+        }
+    }
+
+    @Nested
+    class ThreeOfAKind {
+        @Test
+        @Disabled
+        void should_white_poker_hand_wins_with_three_of_a_kind() {
+            // given
+            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE));
+            var whitePokerHand = pokerHand(new Card(SIX), new Card(SIX), new Card(TWO));
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(BLACK_WINS);
         }
     }
 

@@ -10,9 +10,9 @@ public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
 
         var blackPokerHandPairs = blackPokerHand.pairs();
         var whitePokerHandPairs = whitePokerHand.pairs();
-        var compare = Integer.compare(blackPokerHandPairs.size(), whitePokerHandPairs.size());
+        var compare = Integer.compare(blackPokerHandPairs.cardValues().size(), whitePokerHandPairs.cardValues().size());
 
-        if(blackPokerHandPairs.isEmpty() && whitePokerHandPairs.isEmpty()) {
+        if(blackPokerHandPairs.cardValues().isEmpty() && whitePokerHandPairs.cardValues().isEmpty()) {
             var maxValueBlackPokerHand = blackPokerHand.maxCardValue();
             var maxValueWhitePokerHand = whitePokerHand.maxCardValue();
 
@@ -24,8 +24,8 @@ public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
             return WHITE_WINS;
         }
 
-        var maxPairValueBlackPokerHand = blackPokerHand.maxPairValue();
-        var maxPairValueWhitePokerHand = whitePokerHand.maxPairValue();
+        var maxPairValueBlackPokerHand = blackPokerHandPairs.maxPairValue();
+        var maxPairValueWhitePokerHand = whitePokerHandPairs.maxPairValue();
 
         if(maxPairValueBlackPokerHand.isPresent() && maxPairValueWhitePokerHand.isPresent()) {
             var hightPairResult = hightCardResult(maxPairValueBlackPokerHand.get(), maxPairValueWhitePokerHand.get());

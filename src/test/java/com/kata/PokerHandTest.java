@@ -22,7 +22,7 @@ public class PokerHandTest {
             var pairs = pokerHand.pairs();
 
             // then
-            assertThat(pairs).containsExactly(new Pair(FOUR));
+            assertThat(pairs.cardValues()).containsExactly(FOUR);
         }
         @Test
         void should_not_return_pair_when_have_not_pairs() {
@@ -33,7 +33,7 @@ public class PokerHandTest {
             var pairs = pokerHand.pairs();
 
             // then
-            assertThat(pairs).isEmpty();
+            assertThat(pairs.cardValues()).isEmpty();
         }
         @Test
         void should_not_return_pair_when_have_three_of_kind() {
@@ -44,7 +44,7 @@ public class PokerHandTest {
             var pairs = pokerHand.pairs();
 
             // then
-            assertThat(pairs).isEmpty();
+            assertThat(pairs.cardValues()).isEmpty();
         }
 
     }

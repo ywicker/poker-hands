@@ -9,16 +9,12 @@ public record PokerHand(List<Card> cards) {
                 .orElseThrow().value();
     }
 
-    public Set<Pair> pairs() {
+    public Pairs pairs() {
         Map<CardValue, List<Card>> groupByValues = cards.stream().collect(Collectors.groupingBy(Card::value));
-        return groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().size() == 2)
+        Set<CardValue> pairValues = groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().size() == 2)
                 .map(Map.Entry::getKey)
-                .map(Pair::new)
                 .collect(Collectors.toSet());
-    }
-
-    public Optional<CardValue> maxPairValue() {
-        return pairs().stream().map(Pair::cardValue).max(CardValue::compareTo);
+        return new Pairs(pairValues);
     }
 
     public PokerHand withoutCardValues(CardValue cardValue) {
