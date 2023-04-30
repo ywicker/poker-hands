@@ -11,7 +11,7 @@ public record PokerHand(Card... cards) {
 
     public Set<Pair> pairs() {
         Map<CardValue, List<Card>> groupByValues = Arrays.stream(cards).collect(Collectors.groupingBy(Card::value));
-        return groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().stream().count() == 2)
+        return groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().size() == 2)
                 .map(Map.Entry::getKey)
                 .map(Pair::new)
                 .collect(Collectors.toSet());
