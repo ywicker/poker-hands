@@ -1,14 +1,8 @@
 package com.kata;
 
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public record Pairs(Set<CardValue> cardValues) implements Comparable<Pairs> {
-
-    public Optional<CardValue> maxPairValue() {
-        return cardValues.stream().max(CardValue::compareTo);
-    }
+public record Pairs(Set<CardValue> cardValues) implements Comparable<Pairs>, WithCardValues {
 
     @Override
     public int compareTo(Pairs pairs) {
@@ -16,24 +10,20 @@ public record Pairs(Set<CardValue> cardValues) implements Comparable<Pairs> {
             return 0;
         }
 
-        var compare = Integer.compare(this.cardValues.size(), pairs.cardValues.size());
-        if(compare != 0) {
-            return compare;
+        var compareSize = Integer.compare(this.cardValues.size(), pairs.cardValues.size());
+        if(compareSize != 0) {
+            return compareSize;
         }
 
-        var compareMax = Integer.compare(this.maxPairValue().get().ordinal(), pairs.maxPairValue().get().ordinal());
+        var compareMax = Integer.compare(this.maxCardValue().ordinal(), pairs.maxCardValue().ordinal());
         if(compareMax != 0) {
             return compareMax;
         }
-        return this.withoutCardValues(this.maxPairValue().get())
-                .compareTo(pairs.withoutCardValues(pairs.maxPairValue().get()));
+        return pairWithoutMaxCardValue()
+                .compareTo(pairs.pairWithoutMaxCardValue());
     }
 
-    public Pairs withoutCardValues(CardValue cardValue) {
-        return new Pairs(
-                cardValues.stream()
-                        .filter(value -> !cardValue.equals(value))
-                        .collect(Collectors.toSet())
-        );
+    public Pairs pairWithoutMaxCardValue() {
+        return new Pairs(this.withoutMaxCardValue());
     }
 }

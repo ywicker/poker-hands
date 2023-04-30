@@ -1,7 +1,5 @@
 package com.kata;
 
-import java.util.Set;
-
 import static com.kata.PokerResult.*;
 
 public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {

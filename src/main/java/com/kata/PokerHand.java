@@ -19,8 +19,8 @@ public class PokerHand implements Comparable<PokerHand> {
 
         this.singleCards = new SingleCards(
                 cards.stream()
-                        .filter(card -> !this.pairs.cardValues().contains(card.value()))
                         .map(Card::value)
+                        .filter(value -> !this.pairs.cardValues().contains(value))
                         .collect(Collectors.toSet()));
     }
 
