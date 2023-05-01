@@ -143,6 +143,23 @@ public class PokerRoundTest {
     }
 
     @Nested
+    class StraightWins {
+        private static Stream<Arguments> provideCases() {
+            return Stream.of(
+                    Arguments.of(
+                            pokerHand(new Card(TWO), new Card(THREE), new Card(FOUR), new Card(FIVE), new Card(SIX)),
+                            pokerHand(new Card(SIX), new Card(SIX), new Card(SIX), new Card(TWO), new Card(THREE)),
+                            BLACK_WINS)
+            );
+        }
+        @ParameterizedTest
+        @MethodSource("provideCases")
+        void should_wins_with_greater_Straight(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+            should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
+        }
+    }
+
+    @Nested
     class FourOfAKindWins {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
@@ -154,7 +171,7 @@ public class PokerRoundTest {
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_four_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
