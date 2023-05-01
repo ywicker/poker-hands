@@ -142,6 +142,23 @@ public class PokerRoundTest {
         }
     }
 
+    @Nested
+    class FourOfAKindWins {
+        private static Stream<Arguments> provideCases() {
+            return Stream.of(
+                    Arguments.of(
+                            pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE), new Card(FIVE)),
+                            pokerHand(new Card(SIX), new Card(SIX), new Card(SIX), new Card(TWO)),
+                            BLACK_WINS)
+            );
+        }
+        @ParameterizedTest
+        @MethodSource("provideCases")
+        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+            should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
+        }
+    }
+
     private void should_expected_result_from_poker_hands(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult){
         // given
         var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
