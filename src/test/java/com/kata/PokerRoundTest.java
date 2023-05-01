@@ -209,6 +209,7 @@ public class PokerRoundTest {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
+
     @Nested
     class FullHouseWins {
         private static Stream<Arguments> provideCases() {
@@ -251,6 +252,31 @@ public class PokerRoundTest {
         @ParameterizedTest
         @MethodSource("provideCases")
         void should_wins_with_greater_four_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+            should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
+        }
+    }
+
+    @Nested
+    class StraightFlushWins {
+        private static Stream<Arguments> provideCases() {
+            return Stream.of(
+                    Arguments.of(
+                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
+                            pokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES), new Card(KING, CLUBS), new Card(TWO, CLUBS)),
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(KING, HEARTS), new Card(QUEEN, DIAMONDS), new Card(AS, SPADES), new Card(JACK, CLUBS), new Card(TEN, CLUBS)),
+                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
+                            WHITE_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, DIAMONDS)),
+                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
+                            EGALITY)
+            );
+        }
+        @ParameterizedTest
+        @MethodSource("provideCases")
+        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }

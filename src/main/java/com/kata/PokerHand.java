@@ -17,6 +17,11 @@ public class PokerHand implements Comparable<PokerHand> {
 
     @Override
     public int compareTo(PokerHand pokerHand) {
+        if (this.cards.isStraightFlush() && !pokerHand.cards.isStraightFlush()) {
+            return 1;
+        } else if (!this.cards.isStraightFlush() && pokerHand.cards.isStraightFlush()) {
+            return -1;
+        }
         var compareFourOfAKind = this.fourOfAKinds.compareTo(pokerHand.fourOfAKinds);
         if (compareFourOfAKind != 0) {
             return compareFourOfAKind;

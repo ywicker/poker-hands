@@ -31,6 +31,10 @@ public record Cards(Set<Card> cards) implements Comparable<Cards>, WithCardValue
                 .anyMatch(cardColorListEntry -> cardColorListEntry.getValue().size() == 5);
     }
 
+    public boolean isStraightFlush() {
+        return isStraight() && isFlush();
+    }
+
     @Override
     public int compareTo(Cards cards) {
         if (this.cardValues().isEmpty()) {
