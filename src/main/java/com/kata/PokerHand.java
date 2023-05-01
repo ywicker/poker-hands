@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class PokerHand implements Comparable<PokerHand> {
     private final SameValueCards pairs;
-    private final Cards Cards;
+    private final Cards cards;
     private final SameValueCards threeOfAKinds;
     private final SameValueCards fourOfAKinds;
 
@@ -13,7 +13,7 @@ public class PokerHand implements Comparable<PokerHand> {
         this.fourOfAKinds = SameValueCards.fromCards(cards, 4);
         this.threeOfAKinds = SameValueCards.fromCards(cards, 3);
         this.pairs = SameValueCards.fromCards(cards, 2);
-        this.Cards = new Cards(
+        this.cards = new Cards(
                 cards.stream()
                         .map(Card::value)
                         .collect(Collectors.toSet()));
@@ -25,6 +25,11 @@ public class PokerHand implements Comparable<PokerHand> {
         if (compareFourOfAKind != 0) {
             return compareFourOfAKind;
         }
+        if (this.cards.isStraight() && !pokerHand.cards.isStraight()) {
+            return 1;
+        } else if (!this.cards.isStraight() && pokerHand.cards.isStraight()) {
+            return -1;
+        }
         var compareThreeOfAKind = this.threeOfAKinds.compareTo(pokerHand.threeOfAKinds);
         if (compareThreeOfAKind != 0) {
             return compareThreeOfAKind;
@@ -33,6 +38,6 @@ public class PokerHand implements Comparable<PokerHand> {
         if (comparePairs != 0) {
             return comparePairs;
         }
-        return this.Cards.compareTo(pokerHand.Cards);
+        return this.cards.compareTo(pokerHand.cards);
     }
 }
