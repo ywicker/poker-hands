@@ -12,18 +12,8 @@ public class PokerHand implements Comparable<PokerHand> {
     private final SameValueCards threeOfAKinds;
 
     public PokerHand(Collection<Card> cards){
-        Map<CardValue, List<Card>> groupByValues = cards.stream().collect(Collectors.groupingBy(Card::value));
-
-        Set<CardValue> threeOfAKindValues = groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().size() == 3)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-        this.threeOfAKinds = new SameValueCards(threeOfAKindValues);
-
-        Set<CardValue> pairValues = groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().size() == 2)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-        this.pairs = new SameValueCards(pairValues);
-
+        this.threeOfAKinds = SameValueCards.fromCards(cards, 3);
+        this.pairs = SameValueCards.fromCards(cards, 2);
         this.singleCards = new SingleCards(
                 cards.stream()
                         .map(Card::value)
