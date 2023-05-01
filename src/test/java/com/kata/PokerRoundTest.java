@@ -2,8 +2,12 @@ package com.kata;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import static com.kata.CardValue.*;
 import static com.kata.PokerResult.*;
@@ -213,58 +217,42 @@ public class PokerRoundTest {
 
     @Nested
     class ThreeOfAKindWins {
-        @Test
-        void should_black_poker_hand_wins_with_three_of_a_kind() {
-            // given
-            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE));
-            var whitePokerHand = pokerHand(new Card(SIX), new Card(SIX), new Card(TWO));
-            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
-
-            // when
-            var result = pokerRound.result();
-
-            // then
-            assertThat(result).isEqualTo(BLACK_WINS);
+        private static Stream<Arguments> provideCases() {
+            return Stream.of(
+                    Arguments.of(
+                            pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE)),
+                            pokerHand(new Card(SIX), new Card(SIX), new Card(TWO)),
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(FIVE), new Card(FIVE), new Card(SIX)),
+                            pokerHand(new Card(KING), new Card(KING), new Card(KING)),
+                            WHITE_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE)),
+                            pokerHand(new Card(KING), new Card(KING), new Card(KING)),
+                            WHITE_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(AS), new Card(AS), new Card(AS)),
+                            pokerHand(new Card(KING), new Card(KING), new Card(KING)),
+                            BLACK_WINS)
+            );
         }
-        @Test
-        void should_white_poker_hand_wins_with_three_of_a_kind() {
-            // given
-            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(SIX));
-            var whitePokerHand = pokerHand(new Card(KING), new Card(KING), new Card(KING));
-            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
-
-            // when
-            var result = pokerRound.result();
-
-            // then
-            assertThat(result).isEqualTo(WHITE_WINS);
+        @ParameterizedTest
+        @MethodSource("provideCases")
+        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+            should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
-        @Test
-        void should_white_poker_hand_wins_with_greater_three_of_a_kind() {
-            // given
-            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE));
-            var whitePokerHand = pokerHand(new Card(KING), new Card(KING), new Card(KING));
-            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+    }
 
-            // when
-            var result = pokerRound.result();
+    private void should_expected_result_from_poker_hands(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult){
+        // given
+        var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
-            // then
-            assertThat(result).isEqualTo(WHITE_WINS);
-        }
-        @Test
-        void should_black_poker_hand_wins_with_greater_three_of_a_kind() {
-            // given
-            var blackPokerHand = pokerHand(new Card(AS), new Card(AS), new Card(AS));
-            var whitePokerHand = pokerHand(new Card(KING), new Card(KING), new Card(KING));
-            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+        // when
+        var result = pokerRound.result();
 
-            // when
-            var result = pokerRound.result();
-
-            // then
-            assertThat(result).isEqualTo(BLACK_WINS);
-        }
+        // then
+        assertThat(result).isEqualTo(expectedResult);
     }
 
     public static PokerHand pokerHand(Card... cards) {
