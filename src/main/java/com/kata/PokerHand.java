@@ -9,9 +9,16 @@ import java.util.stream.Collectors;
 public class PokerHand implements Comparable<PokerHand> {
     private final Pairs pairs;
     private final SingleCards singleCards;
+    private final ThreeOfAKinds threeOfAKinds;
 
     public PokerHand(Collection<Card> cards){
         Map<CardValue, List<Card>> groupByValues = cards.stream().collect(Collectors.groupingBy(Card::value));
+
+        Set<CardValue> threeOfAKindValues = groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().size() == 3)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
+        this.threeOfAKinds = new ThreeOfAKinds(threeOfAKindValues);
+
         Set<CardValue> pairValues = groupByValues.entrySet().stream().filter(cardValueListEntry -> cardValueListEntry.getValue().size() == 2)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
@@ -26,6 +33,10 @@ public class PokerHand implements Comparable<PokerHand> {
 
     @Override
     public int compareTo(PokerHand pokerHand) {
+        var compareThreeOfAKind = this.threeOfAKinds.compareTo(pokerHand.threeOfAKinds);
+        if(compareThreeOfAKind != 0) {
+            return compareThreeOfAKind;
+        }
         var comparePairs = this.pairs.compareTo(pokerHand.pairs);
         if(comparePairs != 0) {
             return comparePairs;

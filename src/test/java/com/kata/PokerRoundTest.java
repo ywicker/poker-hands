@@ -1,6 +1,5 @@
 package com.kata;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -213,13 +212,51 @@ public class PokerRoundTest {
     }
 
     @Nested
-    class ThreeOfAKind {
+    class ThreeOfAKindWins {
         @Test
-        @Disabled
-        void should_white_poker_hand_wins_with_three_of_a_kind() {
+        void should_black_poker_hand_wins_with_three_of_a_kind() {
             // given
             var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE));
             var whitePokerHand = pokerHand(new Card(SIX), new Card(SIX), new Card(TWO));
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(BLACK_WINS);
+        }
+        @Test
+        void should_white_poker_hand_wins_with_three_of_a_kind() {
+            // given
+            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(SIX));
+            var whitePokerHand = pokerHand(new Card(KING), new Card(KING), new Card(KING));
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(WHITE_WINS);
+        }
+        @Test
+        void should_white_poker_hand_wins_with_greater_three_of_a_kind() {
+            // given
+            var blackPokerHand = pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE));
+            var whitePokerHand = pokerHand(new Card(KING), new Card(KING), new Card(KING));
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(WHITE_WINS);
+        }
+        @Test
+        void should_black_poker_hand_wins_with_greater_three_of_a_kind() {
+            // given
+            var blackPokerHand = pokerHand(new Card(AS), new Card(AS), new Card(AS));
+            var whitePokerHand = pokerHand(new Card(KING), new Card(KING), new Card(KING));
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
             // when
