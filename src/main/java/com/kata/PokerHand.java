@@ -1,7 +1,6 @@
 package com.kata;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class PokerHand implements Comparable<PokerHand> {
     private final SameValueCards pairs;
@@ -9,14 +8,11 @@ public class PokerHand implements Comparable<PokerHand> {
     private final SameValueCards threeOfAKinds;
     private final SameValueCards fourOfAKinds;
 
-    public PokerHand(Collection<Card> cards) {
+    public PokerHand(Set<Card> cards) {
         this.fourOfAKinds = SameValueCards.fromCards(cards, 4);
         this.threeOfAKinds = SameValueCards.fromCards(cards, 3);
         this.pairs = SameValueCards.fromCards(cards, 2);
-        this.cards = new Cards(
-                cards.stream()
-                        .map(Card::value)
-                        .collect(Collectors.toSet()));
+        this.cards = new Cards(cards);
     }
 
     @Override

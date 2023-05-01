@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 public record SameValueCards(Set<CardValue> cardValues) implements Comparable<SameValueCards>, WithCardValues {
 
     public static SameValueCards fromCards(Collection<Card> cards, int similarCardNumber) {
-        Map<CardValue, List<Card>> groupByValues = cards.stream().collect(Collectors.groupingBy(Card::value));
+        var groupByValues = cards.stream().collect(Collectors.groupingBy(Card::value));
 
-        Set<CardValue> sameValues = groupByValues.entrySet().stream()
+        var sameValues = groupByValues.entrySet().stream()
                 .filter(cardValueListEntry -> cardValueListEntry.getValue().size() == similarCardNumber)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());

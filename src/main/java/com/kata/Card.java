@@ -1,6 +1,6 @@
 package com.kata;
 
-public record Card(CardValue value) implements Comparable<Card>  {
+public record Card(CardValue value, CardColor color) implements Comparable<Card>  {
 
     @Override
     public int compareTo(Card card) {

@@ -11,8 +11,8 @@ public class CompareCardTest {
     @Test
     void should_two_less_than_three(){
         // given
-        var twoS = new Card(TWO);
-        var threeC = new Card(THREE);
+        var twoS = new Card(TWO, CardColor.HEARTS);
+        var threeC = new Card(THREE, CardColor.HEARTS);
 
         // when then
         assertThat(twoS).isLessThan(threeC);
@@ -20,8 +20,8 @@ public class CompareCardTest {
     @Test
     void should_two_is_equals_two(){
         // given
-        var twoC = new Card(TWO);
-        var twoS = new Card(TWO);
+        var twoC = new Card(TWO, CardColor.HEARTS);
+        var twoS = new Card(TWO, CardColor.HEARTS);
 
         // when then
         assertThat(twoC).isEqualTo(twoS);
@@ -29,19 +29,19 @@ public class CompareCardTest {
     @Test
     void should_compare_card_by_values() {
         // given
-        var twoS = new Card(TWO);
-        var threeS = new Card(THREE);
-        var fourD = new Card(FOUR);
-        var fiveH = new Card(FIVE);
-        var sixH = new Card(SIX);
-        var sevenS = new Card(SEVEN);
-        var heightD = new Card(HEIGHT);
-        var nineH = new Card(NINE);
-        var tenC = new Card(TEN);
-        var jackC = new Card(JACK);
-        var queenD = new Card(QUEEN);
-        var kingC = new Card(KING);
-        var asC = new Card(AS);
+        var twoS = new Card(TWO, CardColor.HEARTS);
+        var threeS = new Card(THREE, CardColor.HEARTS);
+        var fourD = new Card(FOUR, CardColor.HEARTS);
+        var fiveH = new Card(FIVE, CardColor.HEARTS);
+        var sixH = new Card(SIX, CardColor.HEARTS);
+        var sevenS = new Card(SEVEN, CardColor.HEARTS);
+        var heightD = new Card(HEIGHT, CardColor.HEARTS);
+        var nineH = new Card(NINE, CardColor.HEARTS);
+        var tenC = new Card(TEN, CardColor.HEARTS);
+        var jackC = new Card(JACK, CardColor.HEARTS);
+        var queenD = new Card(QUEEN, CardColor.HEARTS);
+        var kingC = new Card(KING, CardColor.HEARTS);
+        var asC = new Card(AS, CardColor.HEARTS);
 
         // when then
         assertThat(asC).isGreaterThan(kingC);
