@@ -2,15 +2,15 @@ package com.kata;
 
 import java.util.Set;
 
-public record SingleCards(Set<CardValue> cardValues) implements Comparable<SingleCards>, WithCardValues {
+public record Cards(Set<CardValue> cardValues) implements Comparable<Cards>, WithCardValues {
 
 
-    private SingleCards cardsWithoutMaxCardValue() {
-        return new SingleCards(this.withoutMaxCardValue());
+    private Cards cardsWithoutMaxCardValue() {
+        return new Cards(this.withoutMaxCardValue());
     }
 
     @Override
-    public int compareTo(SingleCards cards) {
+    public int compareTo(Cards cards) {
         if (cardValues.isEmpty()) {
             return 0;
         }

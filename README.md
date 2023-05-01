@@ -6,4 +6,5 @@
 - (V) Four of a kind: 4 cards with the same value. Ranked by the value of the 4 cards.
 - Straight flush: 5 cards of the same suit with consecutive values. Ranked by the highest card in the hand.
 - 
+- Comment le joueur a gagné ?
 - Ajouter un 3eme joueur
