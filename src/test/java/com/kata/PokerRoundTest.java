@@ -176,6 +176,7 @@ public class PokerRoundTest {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
+
     @Nested
     class FlushWins {
         private static Stream<Arguments> provideCases() {
@@ -208,6 +209,30 @@ public class PokerRoundTest {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
+    @Nested
+    class FullHouseWins {
+        private static Stream<Arguments> provideCases() {
+            return Stream.of(
+                    Arguments.of(
+                            pokerHand(new Card(AS, HEARTS), new Card(KING, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            pokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(TWO, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
+                            WHITE_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(KING, HEARTS), new Card(KING, HEARTS), new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS), new Card(FOUR, SPADES)),
+                            pokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(HEIGHT, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(KING, HEARTS), new Card(KING, HEARTS), new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS), new Card(FOUR, SPADES)),
+                            pokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(HEIGHT, SPADES), new Card(HEIGHT, HEARTS), new Card(HEIGHT, SPADES)),
+                            BLACK_WINS)
+            );
+        }
+        @ParameterizedTest
+        @MethodSource("provideCases")
+        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+            should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
+        }
+    }
 
     @Nested
     class FourOfAKindWins {
@@ -216,7 +241,11 @@ public class PokerRoundTest {
                     Arguments.of(
                             pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FIVE, CLUBS)),
                             pokerHand(new Card(SIX, HEARTS), new Card(SIX, DIAMONDS), new Card(SIX, SPADES), new Card(TWO, CLUBS)),
-                            BLACK_WINS)
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(QUEEN, HEARTS), new Card(QUEEN, DIAMONDS), new Card(QUEEN, SPADES), new Card(AS, CLUBS), new Card(AS, SPADES)),
+                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FIVE, CLUBS), new Card(TWO, CLUBS)),
+                            WHITE_WINS)
             );
         }
         @ParameterizedTest

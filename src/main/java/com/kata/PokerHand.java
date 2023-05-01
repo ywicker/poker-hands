@@ -21,6 +21,13 @@ public class PokerHand implements Comparable<PokerHand> {
         if (compareFourOfAKind != 0) {
             return compareFourOfAKind;
         }
+        if (!this.threeOfAKinds.cardValues().isEmpty() && !this.pairs.cardValues().isEmpty()
+                && (pokerHand.threeOfAKinds.cardValues().isEmpty() || pokerHand.pairs.cardValues().isEmpty())) {
+            return 1;
+        } else if ((this.threeOfAKinds.cardValues().isEmpty() || this.pairs.cardValues().isEmpty())
+                && !pokerHand.threeOfAKinds.cardValues().isEmpty() && !pokerHand.pairs.cardValues().isEmpty()) {
+            return -1;
+        }
         if (this.cards.isFlush() && !pokerHand.cards.isFlush()) {
             return 1;
         } else if (!this.cards.isFlush() && pokerHand.cards.isFlush()) {
