@@ -1,56 +1,36 @@
 package com.kata;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PokerHand implements Comparable<PokerHand> {
-    private final SameValueCards pairs;
-    private final Cards cards;
-    private final SameValueCards threeOfAKinds;
-    private final SameValueCards fourOfAKinds;
 
-    public PokerHand(Set<Card> cards) {
-        this.fourOfAKinds = SameValueCards.fromCards(cards, 4);
-        this.threeOfAKinds = SameValueCards.fromCards(cards, 3);
-        this.pairs = SameValueCards.fromCards(cards, 2);
-        this.cards = new Cards(cards);
+    private final Cards cards;
+    public final SameValueCards pairs;
+    public final SameValueCards threeOfAKinds;
+    public final SameValueCards fourOfAKinds;
+    public final Combinaison fullHousse;
+    public final Combinaison straight;
+    public final Combinaison flush;
+    public final Combinaison straightFlush;
+
+    public PokerHand(Set<Card> cardSet) {
+        this.cards = new Cards(cardSet.stream().map(Card::value).collect(Collectors.toSet()));
+        this.pairs = SameValueCards.fromCards(cardSet, 2, cards);
+        this.threeOfAKinds = SameValueCards.fromCards(cardSet, 3, pairs);
+        this.straight = Combinaison.straight(this.cards, threeOfAKinds);
+        this.flush = Combinaison.flush(cardSet, straight);
+        this.fullHousse = new Combinaison(
+                !this.threeOfAKinds.cardValues().isEmpty() && !this.pairs.cardValues().isEmpty(),
+                flush);
+        this.fourOfAKinds = SameValueCards.fromCards(cardSet, 4, fullHousse);
+        this.straightFlush = new Combinaison(straight.state() && flush.state(), fourOfAKinds);
     }
 
     @Override
     public int compareTo(PokerHand pokerHand) {
-        if (this.cards.isStraightFlush() && !pokerHand.cards.isStraightFlush()) {
-            return 1;
-        } else if (!this.cards.isStraightFlush() && pokerHand.cards.isStraightFlush()) {
-            return -1;
-        }
-        var compareFourOfAKind = this.fourOfAKinds.compareTo(pokerHand.fourOfAKinds);
-        if (compareFourOfAKind != 0) {
-            return compareFourOfAKind;
-        }
-        if (!this.threeOfAKinds.cardValues().isEmpty() && !this.pairs.cardValues().isEmpty()
-                && (pokerHand.threeOfAKinds.cardValues().isEmpty() || pokerHand.pairs.cardValues().isEmpty())) {
-            return 1;
-        } else if ((this.threeOfAKinds.cardValues().isEmpty() || this.pairs.cardValues().isEmpty())
-                && !pokerHand.threeOfAKinds.cardValues().isEmpty() && !pokerHand.pairs.cardValues().isEmpty()) {
-            return -1;
-        }
-        if (this.cards.isFlush() && !pokerHand.cards.isFlush()) {
-            return 1;
-        } else if (!this.cards.isFlush() && pokerHand.cards.isFlush()) {
-            return -1;
-        }
-        if (this.cards.isStraight() && !pokerHand.cards.isStraight()) {
-            return 1;
-        } else if (!this.cards.isStraight() && pokerHand.cards.isStraight()) {
-            return -1;
-        }
-        var compareThreeOfAKind = this.threeOfAKinds.compareTo(pokerHand.threeOfAKinds);
-        if (compareThreeOfAKind != 0) {
-            return compareThreeOfAKind;
-        }
-        var comparePairs = this.pairs.compareTo(pokerHand.pairs);
-        if (comparePairs != 0) {
-            return comparePairs;
-        }
-        return this.cards.compareTo(pokerHand.cards);
+        return straightFlush.compareTo(pokerHand.straightFlush);
     }
+
+
 }
