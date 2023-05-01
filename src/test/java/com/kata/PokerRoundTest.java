@@ -128,7 +128,11 @@ public class PokerRoundTest {
                     Arguments.of(
                             pokerHand(new Card(AS), new Card(AS), new Card(AS)),
                             pokerHand(new Card(KING), new Card(KING), new Card(KING)),
-                            BLACK_WINS)
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE), new Card(THREE)),
+                            pokerHand(new Card(FIVE), new Card(FIVE), new Card(FIVE), new Card(FOUR)),
+                            WHITE_WINS)
             );
         }
         @ParameterizedTest
