@@ -159,7 +159,15 @@ public class PokerRoundTest {
                     Arguments.of(
                             pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
                             pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
-                            EGALITY)
+                            EGALITY),
+                    Arguments.of(
+                            pokerHand(new Card(SEVEN, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            pokerHand(new Card(SEVEN, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
+                            WHITE_WINS)
             );
         }
         @ParameterizedTest
@@ -175,7 +183,23 @@ public class PokerRoundTest {
                     Arguments.of(
                             pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
                             pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(SIX, SPADES)),
-                            BLACK_WINS)
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            pokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            WHITE_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            pokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            EGALITY),
+                    Arguments.of(
+                            pokerHand(new Card(SEVEN, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            pokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            BLACK_WINS),
+                    Arguments.of(
+                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            pokerHand(new Card(KING, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            WHITE_WINS)
             );
         }
         @ParameterizedTest
