@@ -10,9 +10,6 @@ public record Combination(CombinationValue value, Comparable cardValueComparator
         this(value, cardValueComparator, Optional.of(lessCombinationCardValues));
     }
 
-    // TODO better Optional<Comparable> management from Combination and maxValue and lessCombinationCardValues.isEmpty()
-    // 5) TODO : CardValues.compare -> add constaint on Cards to have same size
-
     @Override
     public int compareTo(Combination combination) {
         var compareCombinationType = this.value.compareTo(combination.value);

@@ -17,7 +17,7 @@ public class PokerHandTest {
     class Pairs {
         @Test
         void should_return_pair() {
-            var pokerHand = new PokerHand(Set.of(new Card(FOUR, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
+            var pokerHand = new PokerHand(new Player("Black Player"), Set.of(new Card(FOUR, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
 
             assertThat(pokerHand)
                     .extracting("pairs")
@@ -27,7 +27,7 @@ public class PokerHandTest {
 
         @Test
         void should_not_return_pair_when_have_not_pairs() {
-            var pokerHand = new PokerHand(Set.of(new Card(AS, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
+            var pokerHand = new PokerHand(new Player("Black Player"), Set.of(new Card(AS, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
 
             assertThat(pokerHand)
                     .extracting("pairs")
@@ -37,7 +37,7 @@ public class PokerHandTest {
 
         @Test
         void should_not_return_pair_when_have_three_of_kind() {
-            var pokerHand = new PokerHand(Set.of(new Card(FOUR, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
+            var pokerHand = new PokerHand(new Player("Black Player"), Set.of(new Card(FOUR, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
 
             assertThat(pokerHand)
                     .extracting("pairs")

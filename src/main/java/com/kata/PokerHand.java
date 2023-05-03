@@ -9,9 +9,11 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private final Combination bestCombinaison;
     private final Cards cards;
+    private final Player player;
 
-    public PokerHand(Set<Card> cardSet) {
+    public PokerHand(Player player, Set<Card> cardSet) {
         var cardValues = new CardValues(cardSet.stream().map(Card::value).collect(Collectors.toSet()));
+        this.player = player;
         this.cards = new Cards(cardSet, cardValues);
         this.bestCombinaison = buildBestCombinaison(this.cards);
     }
@@ -56,5 +58,9 @@ public class PokerHand implements Comparable<PokerHand> {
     @Override
     public int compareTo(PokerHand pokerHand) {
         return this.bestCombinaison.compareTo(pokerHand.bestCombinaison);
+    }
+
+    public Player player() {
+        return player;
     }
 }

@@ -1,15 +1,13 @@
 package com.kata;
 
-import static com.kata.PokerResult.*;
-
 public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
-    public PokerResult result() {
+    public String result() {
         var compare = blackPokerHand.compareTo(whitePokerHand);
         if (compare > 0) {
-            return BLACK_WINS;
+            return new PokerResult(blackPokerHand).report();
         } else if (compare < 0) {
-            return WHITE_WINS;
+            return new PokerResult(whitePokerHand).report();
         }
-        return EGALITY;
+        return new PokerResult(blackPokerHand, whitePokerHand).report();
     }
 }

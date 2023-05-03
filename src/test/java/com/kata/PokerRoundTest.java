@@ -15,36 +15,39 @@ import static com.kata.PokerResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PokerRoundTest {
+    static String BLACK_WINS = "Black Player wins";
+    static String WHITE_WINS = "White Player wins";
+    static String EGALITY = "Egality";
 
     @Nested
     class HighCardWins {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(THREE, HEARTS)),
-                            pokerHand(new Card(TWO, HEARTS)),
+                            blackPokerHand(new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(TWO, HEARTS)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(THREE, HEARTS)),
-                            pokerHand(new Card(FOUR, HEARTS)),
+                            blackPokerHand(new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(FOUR, HEARTS)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FOUR, HEARTS)),
-                            pokerHand(new Card(FOUR, DIAMONDS)),
+                            blackPokerHand(new Card(FOUR, HEARTS)),
+                            whitePokerHand(new Card(FOUR, DIAMONDS)),
                             EGALITY),
                     Arguments.of(
-                            pokerHand(new Card(FOUR, HEARTS), new Card(THREE, HEARTS)),
-                            pokerHand(new Card(FOUR, DIAMONDS), new Card(TWO, DIAMONDS)),
+                            blackPokerHand(new Card(FOUR, HEARTS), new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(FOUR, DIAMONDS), new Card(TWO, DIAMONDS)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FOUR, HEARTS), new Card(THREE, HEARTS)),
-                            pokerHand(new Card(FOUR, DIAMONDS), new Card(THREE, DIAMONDS)),
+                            blackPokerHand(new Card(FOUR, HEARTS), new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(FOUR, DIAMONDS), new Card(THREE, DIAMONDS)),
                             EGALITY)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -54,26 +57,26 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(THREE, DIAMONDS), new Card(THREE, HEARTS)),
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, SPADES)),
+                            blackPokerHand(new Card(THREE, DIAMONDS), new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(TWO, HEARTS), new Card(THREE, SPADES)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(AS, HEARTS), new Card(THREE, HEARTS)),
-                            pokerHand(new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS)),
+                            blackPokerHand(new Card(AS, HEARTS), new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(THREE, DIAMONDS), new Card(THREE, HEARTS)),
-                            pokerHand(new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS)),
+                            blackPokerHand(new Card(THREE, DIAMONDS), new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS)),
-                            pokerHand(new Card(FOUR, SPADES), new Card(FOUR, CLUBS)),
+                            blackPokerHand(new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS)),
+                            whitePokerHand(new Card(FOUR, SPADES), new Card(FOUR, CLUBS)),
                             EGALITY)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -83,30 +86,30 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(TWO, HEARTS)),
-                            pokerHand(new Card(THREE, HEARTS), new Card(THREE, DIAMONDS), new Card(TWO, CLUBS), new Card(TWO, DIAMONDS)),
+                            blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(TWO, HEARTS)),
+                            whitePokerHand(new Card(THREE, HEARTS), new Card(THREE, DIAMONDS), new Card(TWO, CLUBS), new Card(TWO, DIAMONDS)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, CLUBS), new Card(TWO, HEARTS), new Card(TWO, DIAMONDS)),
-                            pokerHand(new Card(SIX, HEARTS), new Card(SIX, CLUBS), new Card(TWO, CLUBS)),
+                            blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, CLUBS), new Card(TWO, HEARTS), new Card(TWO, DIAMONDS)),
+                            whitePokerHand(new Card(SIX, HEARTS), new Card(SIX, CLUBS), new Card(TWO, CLUBS)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(THREE, HEARTS), new Card(THREE, CLUBS), new Card(TWO, HEARTS), new Card(TWO, DIAMONDS)),
-                            pokerHand(new Card(FOUR, HEARTS), new Card(FOUR, CLUBS), new Card(TWO, CLUBS), new Card(TWO, SPADES)),
+                            blackPokerHand(new Card(THREE, HEARTS), new Card(THREE, CLUBS), new Card(TWO, HEARTS), new Card(TWO, DIAMONDS)),
+                            whitePokerHand(new Card(FOUR, HEARTS), new Card(FOUR, CLUBS), new Card(TWO, CLUBS), new Card(TWO, SPADES)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FIVE, CLUBS), new Card(FIVE, SPADES), new Card(THREE, CLUBS), new Card(THREE, SPADES)),
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(THREE, HEARTS), new Card(THREE, DIAMONDS)),
+                            blackPokerHand(new Card(FIVE, CLUBS), new Card(FIVE, SPADES), new Card(THREE, CLUBS), new Card(THREE, SPADES)),
+                            whitePokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(THREE, HEARTS), new Card(THREE, DIAMONDS)),
                             EGALITY),
                     Arguments.of(
-                            pokerHand(new Card(FIVE, CLUBS), new Card(FIVE, SPADES), new Card(THREE, CLUBS), new Card(THREE, SPADES), new Card(SIX, DIAMONDS)),
-                            pokerHand(new Card(FIVE, DIAMONDS), new Card(FIVE, HEARTS), new Card(THREE, DIAMONDS), new Card(THREE, HEARTS), new Card(AS, DIAMONDS)),
+                            blackPokerHand(new Card(FIVE, CLUBS), new Card(FIVE, SPADES), new Card(THREE, CLUBS), new Card(THREE, SPADES), new Card(SIX, DIAMONDS)),
+                            whitePokerHand(new Card(FIVE, DIAMONDS), new Card(FIVE, HEARTS), new Card(THREE, DIAMONDS), new Card(THREE, HEARTS), new Card(AS, DIAMONDS)),
                             WHITE_WINS)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -116,30 +119,30 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES)),
-                            pokerHand(new Card(SIX, HEARTS), new Card(SIX, DIAMONDS), new Card(TWO, HEARTS)),
+                            blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES)),
+                            whitePokerHand(new Card(SIX, HEARTS), new Card(SIX, DIAMONDS), new Card(TWO, HEARTS)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
-                            pokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES)),
+                            blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
+                            whitePokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES)),
-                            pokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES)),
+                            blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES)),
+                            whitePokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(AS, HEARTS), new Card(AS, DIAMONDS), new Card(AS, SPADES)),
-                            pokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES)),
+                            blackPokerHand(new Card(AS, HEARTS), new Card(AS, DIAMONDS), new Card(AS, SPADES)),
+                            whitePokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(THREE, HEARTS)),
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FOUR, HEARTS)),
+                            blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(THREE, HEARTS)),
+                            whitePokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FOUR, HEARTS)),
                             WHITE_WINS)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_three_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -149,30 +152,30 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
-                            pokerHand(new Card(SIX, DIAMONDS), new Card(SIX, DIAMONDS), new Card(SIX, DIAMONDS), new Card(TWO, DIAMONDS), new Card(THREE, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            whitePokerHand(new Card(SIX, DIAMONDS), new Card(SIX, DIAMONDS), new Card(SIX, DIAMONDS), new Card(TWO, DIAMONDS), new Card(THREE, SPADES)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(KING, SPADES)),
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(KING, SPADES)),
+                            whitePokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            whitePokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
                             EGALITY),
                     Arguments.of(
-                            pokerHand(new Card(SEVEN, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
+                            blackPokerHand(new Card(SEVEN, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            whitePokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
-                            pokerHand(new Card(SEVEN, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            whitePokerHand(new Card(SEVEN, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, SPADES)),
                             WHITE_WINS)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_Straight(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_Straight(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -182,30 +185,30 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(SIX, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            whitePokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(SIX, SPADES)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
-                            pokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
+                            whitePokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
-                            pokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            whitePokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
                             EGALITY),
                     Arguments.of(
-                            pokerHand(new Card(SEVEN, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
-                            pokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            blackPokerHand(new Card(SEVEN, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            whitePokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
-                            pokerHand(new Card(KING, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            whitePokerHand(new Card(KING, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
                             WHITE_WINS)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -215,22 +218,22 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(AS, HEARTS), new Card(KING, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(TWO, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
+                            blackPokerHand(new Card(AS, HEARTS), new Card(KING, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
+                            whitePokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(TWO, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(KING, HEARTS), new Card(KING, HEARTS), new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS), new Card(FOUR, SPADES)),
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(HEIGHT, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
+                            blackPokerHand(new Card(KING, HEARTS), new Card(KING, HEARTS), new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS), new Card(FOUR, SPADES)),
+                            whitePokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(HEIGHT, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(KING, HEARTS), new Card(KING, HEARTS), new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS), new Card(FOUR, SPADES)),
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(HEIGHT, SPADES), new Card(HEIGHT, HEARTS), new Card(HEIGHT, SPADES)),
+                            blackPokerHand(new Card(KING, HEARTS), new Card(KING, HEARTS), new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS), new Card(FOUR, SPADES)),
+                            whitePokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(HEIGHT, SPADES), new Card(HEIGHT, HEARTS), new Card(HEIGHT, SPADES)),
                             BLACK_WINS)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -240,18 +243,18 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FIVE, CLUBS)),
-                            pokerHand(new Card(SIX, HEARTS), new Card(SIX, DIAMONDS), new Card(SIX, SPADES), new Card(TWO, CLUBS)),
+                            blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FIVE, CLUBS)),
+                            whitePokerHand(new Card(SIX, HEARTS), new Card(SIX, DIAMONDS), new Card(SIX, SPADES), new Card(TWO, CLUBS)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(QUEEN, HEARTS), new Card(QUEEN, DIAMONDS), new Card(QUEEN, SPADES), new Card(AS, CLUBS), new Card(AS, SPADES)),
-                            pokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FIVE, CLUBS), new Card(TWO, CLUBS)),
+                            blackPokerHand(new Card(QUEEN, HEARTS), new Card(QUEEN, DIAMONDS), new Card(QUEEN, SPADES), new Card(AS, CLUBS), new Card(AS, SPADES)),
+                            whitePokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(FIVE, SPADES), new Card(FIVE, CLUBS), new Card(TWO, CLUBS)),
                             WHITE_WINS)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_four_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_four_of_a_kind(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
@@ -261,27 +264,27 @@ public class PokerRoundTest {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
-                            pokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES), new Card(KING, CLUBS), new Card(TWO, CLUBS)),
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
+                            whitePokerHand(new Card(KING, HEARTS), new Card(KING, DIAMONDS), new Card(KING, SPADES), new Card(KING, CLUBS), new Card(TWO, CLUBS)),
                             BLACK_WINS),
                     Arguments.of(
-                            pokerHand(new Card(KING, HEARTS), new Card(QUEEN, DIAMONDS), new Card(AS, SPADES), new Card(JACK, CLUBS), new Card(TEN, CLUBS)),
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
+                            blackPokerHand(new Card(KING, HEARTS), new Card(QUEEN, DIAMONDS), new Card(AS, SPADES), new Card(JACK, CLUBS), new Card(TEN, CLUBS)),
+                            whitePokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
                             WHITE_WINS),
                     Arguments.of(
-                            pokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, DIAMONDS)),
-                            pokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
+                            blackPokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, DIAMONDS), new Card(FIVE, DIAMONDS), new Card(SIX, DIAMONDS)),
+                            whitePokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, HEARTS)),
                             EGALITY)
             );
         }
         @ParameterizedTest
         @MethodSource("provideCases")
-        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult) {
+        void should_wins_with_greater_flush(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult) {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
 
-    private void should_expected_result_from_poker_hands(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerResult expectedResult){
+    private void should_expected_result_from_poker_hands(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult){
         // given
         var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
@@ -292,7 +295,11 @@ public class PokerRoundTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
-    public static PokerHand pokerHand(Card... cards) {
-        return new PokerHand(Arrays.stream(cards).collect(Collectors.toSet()));
+    public static PokerHand blackPokerHand(Card... cards) {
+        return new PokerHand(new Player("Black Player"), Arrays.stream(cards).collect(Collectors.toSet()));
+    }
+
+    public static PokerHand whitePokerHand(Card... cards) {
+        return new PokerHand(new Player("White Player"), Arrays.stream(cards).collect(Collectors.toSet()));
     }
 }
