@@ -50,7 +50,7 @@ public class PokerHand implements Comparable<PokerHand> {
             return new Combination(PAIRS, pairs, cards.cardValues().sortedValuesWithout(pairs));
         }
 
-        return new Combination(HIGHT_CARDS, cards.hightCards());
+        return new Combination(HIGHT_CARDS, cards.cardValues());
     }
 
     @Override

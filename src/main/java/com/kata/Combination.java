@@ -4,7 +4,6 @@ public record Combination(CombinationValue value, Comparable cardsComparator, So
     public Combination(CombinationValue value, Comparable cardsComparator) {
         this(value, cardsComparator, new SortedCardValues());
     }
-    // 3) TODO : build FLUSH with Combination(FLUSH, cardsComparator = cardValues, lessCombinationCardComparator = empty))
     // 4) TODO : build HIGHTCARD with Combination(HIGHTCARD, cardsComparator = values, lessCombinationCardComparator = empty)
     // 5) TODO : SortedCardValues cardsComparator => CardValues Set<CardValue> with recursive compare max...
     // 5) TODO : CardValues.compare -> add constaint on Cards to have same size
