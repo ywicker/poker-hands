@@ -24,6 +24,13 @@ public record CardValues(Set<CardValue> cardValueSet) implements Comparable<Card
 
         return new SortedCardValues(cardValueList);
     }
+    public SortedCardValues sortedValuesWithout(CardValue cardValue){
+        var cardValueList = cardValueSet.stream()
+                .filter(value -> !cardValue.equals(value))
+                .sorted().toList();
+
+        return new SortedCardValues(cardValueList);
+    }
     private CardValues cardValuesWithoutMaxValue(){
         var cardValues = cardValueSet.stream()
                 .filter(value -> !this.maxCardValue().equals(value))

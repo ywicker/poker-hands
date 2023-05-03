@@ -19,31 +19,31 @@ public class PokerHand implements Comparable<PokerHand> {
     private static Combination buildBestCombinaison(Cards cards) {
         var flush = cards.flush();
         var straight = cards.straight();
-        if (flush.containsValues() && straight.containsValues()) {
-            return new Combination(STRAIGTH_FLUSH, cards.cardValues().maxCardValue());
+        if (!flush.cardValueSet().isEmpty() && straight.isPresent()) {
+            return new Combination(STRAIGTH_FLUSH, straight.get());
         }
 
         var fourOfAKinds = cards.fourOfAKinds();
-        if (!fourOfAKinds.cardValueSet().isEmpty()) {
-            return new Combination(FOUR_OF_KIND, fourOfAKinds, cards.cardValues().sortedValuesWithout(fourOfAKinds));
+        if (fourOfAKinds.isPresent()) {
+            return new Combination(FOUR_OF_KIND, fourOfAKinds.get(), cards.cardValues().sortedValuesWithout(fourOfAKinds.get()));
         }
 
         var threeOfAKinds = cards.threeOfAKinds();
         var pairs = cards.pairs();
-        if (!threeOfAKinds.cardValueSet().isEmpty() && !pairs.cardValueSet().isEmpty()) {
-            return new Combination(FULL_HOUSSE, threeOfAKinds, cards.similarCardValue(2));
+        if (threeOfAKinds.isPresent() && !pairs.cardValueSet().isEmpty()) {
+            return new Combination(FULL_HOUSSE, threeOfAKinds.get(), cards.similarCardValueOdl(2));
         }
 
-        if (flush.containsValues()) {
-            return new Combination(FLUSH, cards.cardValues());
+        if (!flush.cardValueSet().isEmpty()) {
+            return new Combination(FLUSH, flush);
         }
 
-        if (straight.containsValues()) {
-            return new Combination(STRAIGTH, cards.cardValues().maxCardValue());
+        if (straight.isPresent()) {
+            return new Combination(STRAIGTH, straight.get());
         }
 
-        if (!threeOfAKinds.cardValueSet().isEmpty()) {
-            return new Combination(THREE_OF_KIND, threeOfAKinds, cards.cardValues().sortedValuesWithout(threeOfAKinds));
+        if (threeOfAKinds.isPresent()) {
+            return new Combination(THREE_OF_KIND, threeOfAKinds.get(), cards.cardValues().sortedValuesWithout(threeOfAKinds.get()));
         }
 
         if (!pairs.cardValueSet().isEmpty()) {

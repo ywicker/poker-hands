@@ -2,28 +2,24 @@ package com.kata;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public record Cards(Set<Card> cardSet, CardValues cardValues) {
 
-
-    public SortedCardValues hightCards() {
-        var cardValuesComparator = new SortedCardValues(Collections.emptyList());
-        return cardValuesComparator.addSortedValuesFrom(cardValues);
-    }
     public CardValues pairs() {
-        return similarCardValues(2);
+        return new CardValues(similarCardValue(2));
     }
-    public CardValues threeOfAKinds() {
-        return similarCardValues(3);
+    public Optional<CardValue> threeOfAKinds() {
+        return similarCardValue(3).stream().findAny();
     }
-    public CardValues fourOfAKinds() {
-        return similarCardValues(4);
+    public Optional<CardValue> fourOfAKinds() {
+        return similarCardValue(4).stream().findAny();
     }
 
 
-    public SortedCardValues similarCardValue(int similarCardNumber) {
+    public SortedCardValues similarCardValueOdl(int similarCardNumber) {
         var groupByValues = cardSet.stream().collect(Collectors.groupingBy(Card::value));
 
         var cardValueList = groupByValues.entrySet().stream()
@@ -33,30 +29,28 @@ public record Cards(Set<Card> cardSet, CardValues cardValues) {
 
         return new SortedCardValues(cardValueList);
     }
-    public CardValues similarCardValues(int similarCardNumber) {
+    public Set<CardValue> similarCardValue(int similarCardNumber) {
         var groupByValues = cardSet.stream().collect(Collectors.groupingBy(Card::value));
 
-        var cardValueSet = groupByValues.entrySet().stream()
+        return groupByValues.entrySet().stream()
                 .filter(cardValueListEntry -> cardValueListEntry.getValue().size() == similarCardNumber)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
-
-        return new CardValues(cardValueSet);
     }
 
-    public SortedCardValues straight() {
+    public Optional<CardValue> straight() {
         if (cardValues.isStraight()) {
-            return this.hightCards();
+            return Optional.of(this.cardValues.maxCardValue());
         }
-        return new SortedCardValues(Collections.emptyList());
+        return Optional.empty();
     }
 
-    public SortedCardValues flush() {
+    public CardValues flush() {
         var groupByValues = cardSet.stream().collect(Collectors.groupingBy(Card::color));
         if(groupByValues.entrySet().stream()
                 .anyMatch(cardColorListEntry -> cardColorListEntry.getValue().size() == 5)) {
-            return this.hightCards();
+            return this.cardValues();
         }
-        return new SortedCardValues(Collections.emptyList());
+        return new CardValues(Collections.emptySet());
     }
 }
