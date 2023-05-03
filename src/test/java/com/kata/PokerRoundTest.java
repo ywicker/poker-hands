@@ -211,7 +211,7 @@ public class PokerRoundTest {
     }
 
     @Nested
-    class CombinaisonWins {
+    class CombinationWins {
         private static Stream<Arguments> provideCases() {
             return Stream.of(
                     Arguments.of(
