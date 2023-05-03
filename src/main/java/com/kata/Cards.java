@@ -15,11 +15,11 @@ public record Cards(Set<Card> cardSet, CardValues cardValues) {
     public CardValues pairs() {
         return similarCardValues(2);
     }
-    public SortedCardValues threeOfAKinds() {
-        return similarCardValue(3);
+    public CardValues threeOfAKinds() {
+        return similarCardValues(3);
     }
-    public SortedCardValues fourOfAKinds() {
-        return similarCardValue(4);
+    public CardValues fourOfAKinds() {
+        return similarCardValues(4);
     }
 
 

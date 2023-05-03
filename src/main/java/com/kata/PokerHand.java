@@ -24,13 +24,13 @@ public class PokerHand implements Comparable<PokerHand> {
         }
 
         var fourOfAKinds = cards.fourOfAKinds();
-        if (fourOfAKinds.containsValues()) {
-            return new Combination(FOUR_OF_KIND, fourOfAKinds.addSortedValuesFrom(cards.cardValues()));
+        if (!fourOfAKinds.cardValueSet().isEmpty()) {
+            return new Combination(FOUR_OF_KIND, fourOfAKinds, cards.cardValues().sortedValuesWithout(fourOfAKinds));
         }
 
         var threeOfAKinds = cards.threeOfAKinds();
         var pairs = cards.pairs();
-        if (threeOfAKinds.containsValues() && !pairs.cardValueSet().isEmpty()) {
+        if (!threeOfAKinds.cardValueSet().isEmpty() && !pairs.cardValueSet().isEmpty()) {
             return new Combination(FULL_HOUSSE, threeOfAKinds, cards.similarCardValue(2));
         }
 
@@ -42,8 +42,8 @@ public class PokerHand implements Comparable<PokerHand> {
             return new Combination(STRAIGTH, cards.cardValues().maxCardValue());
         }
 
-        if (threeOfAKinds.containsValues()) {
-            return new Combination(THREE_OF_KIND, threeOfAKinds.addSortedValuesFrom(cards.cardValues()));
+        if (!threeOfAKinds.cardValueSet().isEmpty()) {
+            return new Combination(THREE_OF_KIND, threeOfAKinds, cards.cardValues().sortedValuesWithout(threeOfAKinds));
         }
 
         if (!pairs.cardValueSet().isEmpty()) {
