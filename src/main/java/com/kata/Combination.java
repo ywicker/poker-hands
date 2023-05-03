@@ -1,18 +1,17 @@
 package com.kata;
 
-public record Combination(CombinationValue value, SortedCardValues cardsComparator, SortedCardValues lessCardComparator) implements Comparable<Combination> {
+public record Combination(CombinationValue value, SortedCardValues cardsComparator, SortedCardValues lessCombinationCardComparator) implements Comparable<Combination> {
     public Combination(CombinationValue value, SortedCardValues cardsComparator) {
         this(value, cardsComparator, new SortedCardValues());
     }
-    // 1) TODO : build FULLHOUSE with Combination(FULLHOUSE, cardsComparator = value, lessCardComparator = Combination(PAIR, cardsComparator = value))
-    // 2) TODO : build 2 PAIRS with Combination(PAIR, cardsComparator = bestValue, lessCardComparator = Combination(PAIR, cardsComparator = secondValue, lessCardComparator = Combination(HIGHTCARD, cardsComparator = value)))
-    // 3) TODO : build STRAIGH with Combination(STRAIGH, cardsComparator = bestValue, lessCardComparator = empty)
-    // 4) TODO : build FLUSH with Combination(FLUSH, cardsComparator = bestValue, lessCardComparator = Combination(HIGHTCARD, cardsComparator = secondValue, lessCardComparator = Combination(HIGHTCARD, cardsComparator = thirdValue...)))
-    //        OU build FLUSH with Combination(FLUSH, cardsComparator = bestValue, lessCardComparator = Combination(FLUSH, cardsComparator = secondValue, lessCardComparator = Combination(FLUSH, cardsComparator = thirdValue...)))
-    // 5) TODO : build HIGHTCARD with Combination(HIGHTCARD, cardsComparator = bestValue, lessCardComparator = Combination(HIGHTCARD, cardsComparator = secondValue, lessCardComparator = Combination(HIGHTCARD, cardsComparator = thirdValue...)))
-    // 6) TODO : SortedCardValues cardsComparator => CardValues Optional<bestValue>
+    // 2) TODO : build 2 PAIRS with Combination(PAIR, cardsComparator = pairValues, lessCombinationCardComparator = other values))
+    // 3) TODO : build FLUSH with Combination(FLUSH, cardsComparator = empty, lessCombinationCardComparator = all values))
+    // 4) TODO : build HIGHTCARD with Combination(HIGHTCARD, cardsComparator = values, lessCombinationCardComparator = empty)
+    // 5) TODO : SortedCardValues cardsComparator => CardValues Set<CardValue> with recursive compare max...
 
-    // TODO ? : build FULLHOUSE with Combination(THREE, cardsComparator = value, lessCardComparator = Combination(PAIR, cardsComparator = value))
+    // TODO ? : build FULLHOUSE with Combination(FULLHOUSE, cardsComparator = thirdOfKind Value, lessCardComparator = Pair Value
+    // TODO ? : build STRAIGH with Combination(STRAIGH, cardsComparator = bestValue, lessCardComparator = empty)
+    //            and STRAIGH_FLUSH
     @Override
     public int compareTo(Combination combination) {
         var compareCombinationType = this.value.compareTo(combination.value);
@@ -21,9 +20,9 @@ public record Combination(CombinationValue value, SortedCardValues cardsComparat
         }
 
         var compareCombinaisonCardValues = this.cardsComparator.compareTo(combination.cardsComparator);
-        if(this.lessCardComparator.cardValueList().isEmpty() && combination.lessCardComparator.cardValueList().isEmpty() && compareCombinaisonCardValues != 0) {
+        if(this.lessCombinationCardComparator.cardValueList().isEmpty() && combination.lessCombinationCardComparator.cardValueList().isEmpty() && compareCombinaisonCardValues != 0) {
             return compareCombinaisonCardValues;
         }
-        return this.lessCardComparator.compareTo(combination.lessCardComparator);
+        return this.lessCombinationCardComparator.compareTo(combination.lessCombinationCardComparator);
     }
 }
