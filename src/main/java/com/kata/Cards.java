@@ -12,8 +12,8 @@ public record Cards(Set<Card> cardSet, CardValues cardValues) {
         var cardValuesComparator = new SortedCardValues(Collections.emptyList());
         return cardValuesComparator.addSortedValuesFrom(cardValues);
     }
-    public SortedCardValues pairs() {
-        return similarCardValue(2);
+    public CardValues pairs() {
+        return similarCardValues(2);
     }
     public SortedCardValues threeOfAKinds() {
         return similarCardValue(3);
@@ -32,6 +32,16 @@ public record Cards(Set<Card> cardSet, CardValues cardValues) {
                 .sorted().toList();
 
         return new SortedCardValues(cardValueList);
+    }
+    public CardValues similarCardValues(int similarCardNumber) {
+        var groupByValues = cardSet.stream().collect(Collectors.groupingBy(Card::value));
+
+        var cardValueSet = groupByValues.entrySet().stream()
+                .filter(cardValueListEntry -> cardValueListEntry.getValue().size() == similarCardNumber)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
+
+        return new CardValues(cardValueSet);
     }
 
     public SortedCardValues straight() {

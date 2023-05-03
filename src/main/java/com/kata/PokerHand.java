@@ -30,8 +30,8 @@ public class PokerHand implements Comparable<PokerHand> {
 
         var threeOfAKinds = cards.threeOfAKinds();
         var pairs = cards.pairs();
-        if (threeOfAKinds.containsValues() && pairs.containsValues()) {
-            return new Combination(FULL_HOUSSE, threeOfAKinds, pairs);
+        if (threeOfAKinds.containsValues() && !pairs.cardValueSet().isEmpty()) {
+            return new Combination(FULL_HOUSSE, threeOfAKinds, cards.similarCardValue(2));
         }
 
         if (flush.containsValues()) {
@@ -46,8 +46,8 @@ public class PokerHand implements Comparable<PokerHand> {
             return new Combination(THREE_OF_KIND, threeOfAKinds.addSortedValuesFrom(cards.cardValues()));
         }
 
-        if (pairs.containsValues()) {
-            return new Combination(pairs.cardValueList().size() == 2 ? TWO_PAIRS : PAIR, pairs.addSortedValuesFrom(cards.cardValues()));
+        if (!pairs.cardValueSet().isEmpty()) {
+            return new Combination(PAIRS, pairs, cards.cardValues().sortedValuesWithout(pairs));
         }
 
         return new Combination(HIGHT_CARDS, cards.hightCards());
