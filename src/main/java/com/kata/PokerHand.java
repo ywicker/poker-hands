@@ -20,7 +20,7 @@ public class PokerHand implements Comparable<PokerHand> {
         var flush = cards.flush();
         var straight = cards.straight();
         if (flush.containsValues() && straight.containsValues()) {
-            return new Combination(STRAIGTH_FLUSH, cards.hightCards());
+            return new Combination(STRAIGTH_FLUSH, cards.cardValues().maxCardValue());
         }
 
         var fourOfAKinds = cards.fourOfAKinds();
@@ -39,7 +39,7 @@ public class PokerHand implements Comparable<PokerHand> {
         }
 
         if (straight.containsValues()) {
-            return new Combination(STRAIGTH, cards.hightCards());
+            return new Combination(STRAIGTH, cards.cardValues().maxCardValue());
         }
 
         if (threeOfAKinds.containsValues()) {
