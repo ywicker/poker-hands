@@ -18,17 +18,6 @@ public record Cards(Set<Card> cardSet, CardValues cardValues) {
         return similarCardValue(4).stream().findAny();
     }
 
-
-    public SortedCardValues similarCardValueOdl(int similarCardNumber) {
-        var groupByValues = cardSet.stream().collect(Collectors.groupingBy(Card::value));
-
-        var cardValueList = groupByValues.entrySet().stream()
-                .filter(cardValueListEntry -> cardValueListEntry.getValue().size() == similarCardNumber)
-                .map(Map.Entry::getKey)
-                .sorted().toList();
-
-        return new SortedCardValues(cardValueList);
-    }
     public Set<CardValue> similarCardValue(int similarCardNumber) {
         var groupByValues = cardSet.stream().collect(Collectors.groupingBy(Card::value));
 

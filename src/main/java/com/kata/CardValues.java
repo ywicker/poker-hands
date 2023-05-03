@@ -17,23 +17,18 @@ public record CardValues(Set<CardValue> cardValueSet) implements Comparable<Card
         return cardValueSet.stream().max(CardValue::compareTo).orElseThrow();
     }
 
-    public SortedCardValues sortedValuesWithout(CardValues cardValues){
-        var cardValueList = cardValueSet.stream()
-                .filter(value -> !cardValues.cardValueSet.contains(value))
-                .sorted().toList();
-
-        return new SortedCardValues(cardValueList);
+    public CardValues cardValuesWithoutMaxValue(){
+        return cardValuesWithout(this.maxCardValue());
     }
-    public SortedCardValues sortedValuesWithout(CardValue cardValue){
-        var cardValueList = cardValueSet.stream()
-                .filter(value -> !cardValue.equals(value))
-                .sorted().toList();
-
-        return new SortedCardValues(cardValueList);
+    public CardValues cardValuesWithout(CardValues filteredCardValues){
+        return cardValuesWithout(filteredCardValues.cardValueSet);
     }
-    private CardValues cardValuesWithoutMaxValue(){
+    public CardValues cardValuesWithout(CardValue filteredCardValue){
+        return cardValuesWithout(Set.of(filteredCardValue));
+    }
+    private CardValues cardValuesWithout(Set<CardValue> filteredCardValues){
         var cardValues = cardValueSet.stream()
-                .filter(value -> !this.maxCardValue().equals(value))
+                .filter(value -> !filteredCardValues.contains(value))
                 .collect(Collectors.toSet());
 
         return new CardValues(cardValues);

@@ -25,13 +25,13 @@ public class PokerHand implements Comparable<PokerHand> {
 
         var fourOfAKinds = cards.fourOfAKinds();
         if (fourOfAKinds.isPresent()) {
-            return new Combination(FOUR_OF_KIND, fourOfAKinds.get(), cards.cardValues().sortedValuesWithout(fourOfAKinds.get()));
+            return new Combination(FOUR_OF_KIND, fourOfAKinds.get(), cards.cardValues().cardValuesWithout(fourOfAKinds.get()));
         }
 
         var threeOfAKinds = cards.threeOfAKinds();
         var pairs = cards.pairs();
         if (threeOfAKinds.isPresent() && !pairs.cardValueSet().isEmpty()) {
-            return new Combination(FULL_HOUSSE, threeOfAKinds.get(), cards.similarCardValueOdl(2));
+            return new Combination(FULL_HOUSSE, threeOfAKinds.get(), pairs);
         }
 
         if (!flush.cardValueSet().isEmpty()) {
@@ -43,11 +43,11 @@ public class PokerHand implements Comparable<PokerHand> {
         }
 
         if (threeOfAKinds.isPresent()) {
-            return new Combination(THREE_OF_KIND, threeOfAKinds.get(), cards.cardValues().sortedValuesWithout(threeOfAKinds.get()));
+            return new Combination(THREE_OF_KIND, threeOfAKinds.get(), cards.cardValues().cardValuesWithout(threeOfAKinds.get()));
         }
 
         if (!pairs.cardValueSet().isEmpty()) {
-            return new Combination(PAIRS, pairs, cards.cardValues().sortedValuesWithout(pairs));
+            return new Combination(PAIRS, pairs, cards.cardValues().cardValuesWithout(pairs));
         }
 
         return new Combination(HIGHT_CARDS, cards.cardValues());
