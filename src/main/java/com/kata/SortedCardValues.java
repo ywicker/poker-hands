@@ -1,11 +1,14 @@
 package com.kata;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 public record SortedCardValues(List<CardValue> cardValueList) implements Comparable<SortedCardValues> {
+    public SortedCardValues(){
+        this(Collections.emptyList());
+    }
 
     @Override
     public int compareTo(SortedCardValues sortedCardValues) {
@@ -32,9 +35,6 @@ public record SortedCardValues(List<CardValue> cardValueList) implements Compara
         return addSortedValuesFrom(cardValues.cardValueSet());
     }
 
-    public SortedCardValues addSortedValuesFrom(SortedCardValues sortedCardValues){
-        return addSortedValuesFrom(new HashSet<>(sortedCardValues.cardValueList()));
-    }
     private SortedCardValues addSortedValuesFrom(Set<CardValue> cardValues){
         var cardValueArray = new ArrayList<>(this.cardValueList);
         var test = cardValues.stream()

@@ -31,7 +31,7 @@ public class PokerHand implements Comparable<PokerHand> {
         var threeOfAKinds = cards.threeOfAKinds();
         var pairs = cards.pairs();
         if (threeOfAKinds.containsValues() && pairs.containsValues()) {
-            return new Combination(FULL_HOUSSE, threeOfAKinds.addSortedValuesFrom(pairs));
+            return new Combination(FULL_HOUSSE, threeOfAKinds, pairs);
         }
 
         if (flush.containsValues()) {
