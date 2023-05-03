@@ -35,7 +35,7 @@ public class PokerHand implements Comparable<PokerHand> {
         }
 
         if (flush.containsValues()) {
-            return new Combination(FLUSH, cards.hightCards());
+            return new Combination(FLUSH, cards.cardValues());
         }
 
         if (straight.containsValues()) {

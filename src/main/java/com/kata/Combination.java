@@ -1,7 +1,7 @@
 package com.kata;
 
 public record Combination(CombinationValue value, Comparable cardsComparator, SortedCardValues lessCombinationCardComparator) implements Comparable<Combination> {
-    public Combination(CombinationValue value, SortedCardValues cardsComparator) {
+    public Combination(CombinationValue value, Comparable cardsComparator) {
         this(value, cardsComparator, new SortedCardValues());
     }
     // 3) TODO : build FLUSH with Combination(FLUSH, cardsComparator = cardValues, lessCombinationCardComparator = empty))
