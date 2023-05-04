@@ -3,15 +3,21 @@ package com.kata;
 import java.util.*;
 
 public record PokerRound(PokerHand... pokerHands) {
+    public PokerRound {
+        if (pokerHands.length < 2) {
+            throw new java.lang.IllegalArgumentException(
+                    String.format("PokerRound need 2 poker hands to be played"));
+        }
+    }
     public String result() {
-
-        var list = Arrays.stream(pokerHands).sorted(Comparator.reverseOrder()).toList();
-        var one = list.listIterator();
-        var pokerHand1 = one.next();
         Set<PokerHand> pokerHandsWin = new HashSet<>();
+
+        var pokerHandsRanked = Arrays.stream(pokerHands).sorted(Comparator.reverseOrder()).toList().listIterator();
+        var pokerHand1 = pokerHandsRanked.next();
         pokerHandsWin.add(pokerHand1);
-        for(ListIterator<PokerHand> two = list.listIterator(one.nextIndex()); two.hasNext();) {
-            var pokerHand2 = two.next();
+
+        while (pokerHandsRanked.hasNext()) {
+            var pokerHand2 = pokerHandsRanked.next();
             var compare = pokerHand1.compareTo(pokerHand2);
             if(compare == 0) {
                 pokerHandsWin.add(pokerHand2);

@@ -1,7 +1,6 @@
 # poker-hands
 
 - Comment le joueur a gagné ?
-- Ajouter un 3eme joueur
 - Compatible texas Holden (7 cartes pour une combinaison de 5)
 - 
   TODO better Optional<Comparable> management from Combination and maxValue and lessCombinationCardValues.isEmpty()
