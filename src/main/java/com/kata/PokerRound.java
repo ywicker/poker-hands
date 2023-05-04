@@ -1,13 +1,23 @@
 package com.kata;
 
-public record PokerRound(PokerHand blackPokerHand, PokerHand whitePokerHand) {
+import java.util.*;
+
+public record PokerRound(PokerHand... pokerHands) {
     public String result() {
-        var compare = blackPokerHand.compareTo(whitePokerHand);
-        if (compare > 0) {
-            return new PokerResult(blackPokerHand).report();
-        } else if (compare < 0) {
-            return new PokerResult(whitePokerHand).report();
+
+        var list = Arrays.stream(pokerHands).sorted(Comparator.reverseOrder()).toList();
+        var one = list.listIterator();
+        var pokerHand1 = one.next();
+        Set<PokerHand> pokerHandsWin = new HashSet<>();
+        pokerHandsWin.add(pokerHand1);
+        for(ListIterator<PokerHand> two = list.listIterator(one.nextIndex()); two.hasNext();) {
+            var pokerHand2 = two.next();
+            var compare = pokerHand1.compareTo(pokerHand2);
+            if(compare == 0) {
+                pokerHandsWin.add(pokerHand2);
+            }
         }
-        return new PokerResult(blackPokerHand, whitePokerHand).report();
+
+        return new PokerResult(pokerHandsWin).report();
     }
 }

@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PokerRoundTest {
     static String BLACK_WINS = "Black Player wins";
     static String WHITE_WINS = "White Player wins";
-    static String EGALITY = "Egality";
+    static String GREEN_WINS = "Green Player wins";
+    static String EGALITY = "Egality between : Black Player and White Player";
 
     @Nested
     class HighCardWins {
@@ -283,6 +284,40 @@ public class PokerRoundTest {
             should_expected_result_from_poker_hands(blackPokerHand, whitePokerHand, expectedResult);
         }
     }
+    @Nested
+    class ThirdPlayers {
+        private static Stream<Arguments> provideCases() {
+            return Stream.of(
+                    Arguments.of(
+                            blackPokerHand(new Card(TWO, HEARTS)),
+                            whitePokerHand(new Card(KING, HEARTS)),
+                            greenPokerHand(new Card(AS, HEARTS)),
+                            GREEN_WINS),
+                    Arguments.of(
+                            blackPokerHand(new Card(TWO, HEARTS), new Card(KING, DIAMONDS)),
+                            whitePokerHand(new Card(KING, HEARTS), new Card(KING, SPADES)),
+                            greenPokerHand(new Card(AS, HEARTS), new Card(KING, CLUBS)),
+                            WHITE_WINS),
+                    Arguments.of(
+                            blackPokerHand(new Card(KING, CLUBS), new Card(KING, DIAMONDS)),
+                            whitePokerHand(new Card(AS, HEARTS), new Card(QUEEN, CLUBS)),
+                            greenPokerHand(new Card(KING, HEARTS), new Card(KING, SPADES)),
+                            "Egality between : Black Player and Green Player")
+            );
+        }
+        @ParameterizedTest
+        @MethodSource("provideCases")
+        void should_expected_result_from_three_poker_hands(PokerHand blackPokerHand, PokerHand whitePokerHand, PokerHand greenPokerHand, String expectedResult){
+            // given
+            var pokerRound = new PokerRound(blackPokerHand, whitePokerHand, greenPokerHand);
+
+            // when
+            var result = pokerRound.result();
+
+            // then
+            assertThat(result).isEqualTo(expectedResult);
+        }
+    }
 
     private void should_expected_result_from_poker_hands(PokerHand blackPokerHand, PokerHand whitePokerHand, String expectedResult){
         // given
@@ -301,5 +336,9 @@ public class PokerRoundTest {
 
     public static PokerHand whitePokerHand(Card... cards) {
         return new PokerHand(new Player("White Player"), Arrays.stream(cards).collect(Collectors.toSet()));
+    }
+
+    public static PokerHand greenPokerHand(Card... cards) {
+        return new PokerHand(new Player("Green Player"), Arrays.stream(cards).collect(Collectors.toSet()));
     }
 }
