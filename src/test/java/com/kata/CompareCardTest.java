@@ -41,7 +41,7 @@ public class CompareCardTest {
         var jackC = new Card(JACK, CardColor.HEARTS);
         var queenD = new Card(QUEEN, CardColor.HEARTS);
         var kingC = new Card(KING, CardColor.HEARTS);
-        var asC = new Card(AS, CardColor.HEARTS);
+        var asC = new Card(ACE, CardColor.HEARTS);
 
         // when then
         assertThat(asC).isGreaterThan(kingC);

@@ -1,9 +1,17 @@
 package com.kata;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public record CardValues(Set<CardValue> cardValueSet) implements Comparable<CardValues> {
+
+    public Optional<CardValues> optional(){
+        if (cardValueSet.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(this);
+    }
 
     public boolean isStraight() {
         return cardValueSet.stream()
@@ -27,11 +35,11 @@ public record CardValues(Set<CardValue> cardValueSet) implements Comparable<Card
         return cardValuesWithout(Set.of(filteredCardValue));
     }
     private CardValues cardValuesWithout(Set<CardValue> filteredCardValues){
-        var cardValues = cardValueSet.stream()
-                .filter(value -> !filteredCardValues.contains(value))
-                .collect(Collectors.toSet());
-
-        return new CardValues(cardValues);
+        return new CardValues(
+                cardValueSet.stream()
+                        .filter(value -> !filteredCardValues.contains(value))
+                        .collect(Collectors.toSet())
+        );
     }
 
     @Override
@@ -46,5 +54,10 @@ public record CardValues(Set<CardValue> cardValueSet) implements Comparable<Card
             return compareMaxValue;
         }
         return this.cardValuesWithoutMaxValue().compareTo(cardValues.cardValuesWithoutMaxValue());
+    }
+
+    @Override
+    public String toString(){
+        return cardValueSet.stream().map(CardValue::toString).collect(Collectors.joining(", "));
     }
 }

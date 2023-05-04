@@ -9,7 +9,14 @@ public record PokerRound(PokerHand... pokerHands) {
                     String.format("PokerRound need 2 poker hands to be played"));
         }
     }
-    public String result() {
+    public String report() {
+        return result().report();
+    }
+    public String reportDetail() {
+        return result().reportDetail();
+    }
+
+    private PokerResult result() {
         Set<PokerHand> pokerHandsWin = new HashSet<>();
 
         var pokerHandsRanked = Arrays.stream(pokerHands).sorted(Comparator.reverseOrder()).toList().listIterator();
@@ -24,6 +31,6 @@ public record PokerRound(PokerHand... pokerHands) {
             }
         }
 
-        return new PokerResult(pokerHandsWin).report();
+        return new PokerResult(pokerHandsWin);
     }
 }

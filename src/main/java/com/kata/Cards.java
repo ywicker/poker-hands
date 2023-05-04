@@ -1,6 +1,5 @@
 package com.kata;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -8,8 +7,9 @@ import java.util.stream.Collectors;
 
 public record Cards(Set<Card> cardSet, CardValues cardValues) {
 
-    public CardValues pairs() {
-        return new CardValues(similarCardValue(2));
+    public Optional<CardValues> pairs() {
+        var similarCardValues = new CardValues(similarCardValue(2));
+        return similarCardValues.optional();
     }
     public Optional<CardValue> threeOfAKinds() {
         return similarCardValue(3).stream().findAny();
@@ -34,12 +34,12 @@ public record Cards(Set<Card> cardSet, CardValues cardValues) {
         return Optional.empty();
     }
 
-    public CardValues flush() {
+    public Optional<CardValues> flush() {
         var groupByValues = cardSet.stream().collect(Collectors.groupingBy(Card::color));
         if(groupByValues.entrySet().stream()
                 .anyMatch(cardColorListEntry -> cardColorListEntry.getValue().size() == 5)) {
-            return this.cardValues();
+            return Optional.of(this.cardValues());
         }
-        return new CardValues(Collections.emptySet());
+        return Optional.empty();
     }
 }

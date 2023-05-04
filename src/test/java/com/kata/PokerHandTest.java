@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static com.kata.CardValue.AS;
+import static com.kata.CardValue.ACE;
 import static com.kata.CardValue.FOUR;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +27,7 @@ public class PokerHandTest {
 
         @Test
         void should_not_return_pair_when_have_not_pairs() {
-            var pokerHand = new PokerHand(new Player("Black Player"), Set.of(new Card(AS, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
+            var pokerHand = new PokerHand(new Player("Black Player"), Set.of(new Card(ACE, CardColor.HEARTS), new Card(FOUR, CardColor.HEARTS)));
 
             assertThat(pokerHand)
                     .extracting("pairs")

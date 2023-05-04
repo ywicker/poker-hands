@@ -2,12 +2,9 @@ package com.kata;
 
 import java.util.Optional;
 
-public record Combination(CombinationValue value, Comparable cardValueComparator, Optional<Comparable> lessCombinationCardValues) implements Comparable<Combination> {
+public record Combination<T extends Comparable>(CombinationValue value, Comparable cardValueComparator, Optional<T> lessCombinationCardValues) implements Comparable<Combination> {
     public Combination(CombinationValue value, Comparable cardValueComparator) {
         this(value, cardValueComparator, Optional.empty());
-    }
-    public Combination(CombinationValue value, Comparable cardValueComparator, Comparable lessCombinationCardValues) {
-        this(value, cardValueComparator, Optional.of(lessCombinationCardValues));
     }
 
     @Override
