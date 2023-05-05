@@ -5,15 +5,11 @@ import java.util.*;
 public record PokerRound(PokerHand... pokerHands) {
     public PokerRound {
         if (pokerHands.length < 2) {
-            throw new java.lang.IllegalArgumentException(
-                    String.format("PokerRound need 2 poker hands to be played"));
+            throw new java.lang.IllegalArgumentException("PokerRound need 2 poker hands to be played");
         }
     }
     public String report() {
         return result().report();
-    }
-    public String reportDetail() {
-        return result().reportDetail();
     }
 
     private PokerResult result() {

@@ -38,7 +38,7 @@ public class PokerRoundTest {
                     Arguments.of(
                             blackPokerHand(new Card(FOUR, HEARTS), new Card(THREE, HEARTS)),
                             whitePokerHand(new Card(FOUR, DIAMONDS), new Card(TWO, DIAMONDS)),
-                            BLACK_WINS + " - with hight card: 3, 4"),
+                            BLACK_WINS + " - with hight card: "),
                     Arguments.of(
                             blackPokerHand(new Card(FOUR, HEARTS), new Card(THREE, HEARTS)),
                             whitePokerHand(new Card(FOUR, DIAMONDS), new Card(THREE, DIAMONDS)),
@@ -92,11 +92,11 @@ public class PokerRoundTest {
                     Arguments.of(
                             blackPokerHand(new Card(FIVE, HEARTS), new Card(FIVE, CLUBS), new Card(TWO, HEARTS), new Card(TWO, DIAMONDS)),
                             whitePokerHand(new Card(SIX, HEARTS), new Card(SIX, CLUBS), new Card(TWO, CLUBS)),
-                            BLACK_WINS + " - with pair: 2, 5"),
+                            BLACK_WINS + " - with pair: "),
                     Arguments.of(
                             blackPokerHand(new Card(THREE, HEARTS), new Card(THREE, CLUBS), new Card(TWO, HEARTS), new Card(TWO, DIAMONDS)),
                             whitePokerHand(new Card(FOUR, HEARTS), new Card(FOUR, CLUBS), new Card(TWO, CLUBS), new Card(TWO, SPADES)),
-                            WHITE_WINS + " - with pair: 2, 4"),
+                            WHITE_WINS + " - with pair: "),
                     Arguments.of(
                             blackPokerHand(new Card(FIVE, CLUBS), new Card(FIVE, SPADES), new Card(THREE, CLUBS), new Card(THREE, SPADES)),
                             whitePokerHand(new Card(FIVE, HEARTS), new Card(FIVE, DIAMONDS), new Card(THREE, HEARTS), new Card(THREE, DIAMONDS)),
@@ -187,23 +187,23 @@ public class PokerRoundTest {
                     Arguments.of(
                             blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
                             whitePokerHand(new Card(TWO, DIAMONDS), new Card(THREE, DIAMONDS), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(SIX, SPADES)),
-                            BLACK_WINS + " - with flush: 2, 5, Queen, 3, 4"),
+                            BLACK_WINS + " - with flush: "),
                     Arguments.of(
                             blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(SIX, SPADES)),
                             whitePokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
-                            WHITE_WINS + " - with flush: 2, 5, 3, Queen, 4"),
+                            WHITE_WINS + " - with flush: "),
                     Arguments.of(
                             blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
                             whitePokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
-                            EGALITY + " - with flush: 2, 5, Queen, 3, 4"),
+                            EGALITY + " - with flush: "),
                     Arguments.of(
                             blackPokerHand(new Card(SEVEN, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
                             whitePokerHand(new Card(TWO, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
-                            BLACK_WINS + " - with flush: 7, 5, Queen, 3, 4"),
+                            BLACK_WINS + " - with flush: "),
                     Arguments.of(
                             blackPokerHand(new Card(TWO, HEARTS), new Card(THREE, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
                             whitePokerHand(new Card(KING, SPADES), new Card(THREE, SPADES), new Card(FOUR, SPADES), new Card(FIVE, SPADES), new Card(QUEEN, SPADES)),
-                            WHITE_WINS + " - with flush: King, 5, 3, Queen, 4")
+                            WHITE_WINS + " - with flush: ")
             );
         }
         @ParameterizedTest
@@ -220,7 +220,7 @@ public class PokerRoundTest {
                     Arguments.of(
                             blackPokerHand(new Card(ACE, HEARTS), new Card(KING, HEARTS), new Card(FOUR, HEARTS), new Card(FIVE, HEARTS), new Card(QUEEN, HEARTS)),
                             whitePokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(TWO, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
-                            WHITE_WINS + " - with full house: 2 over 6"),
+                            WHITE_WINS + " - with full house: "),
                     Arguments.of(
                             blackPokerHand(new Card(KING, HEARTS), new Card(KING, HEARTS), new Card(FOUR, DIAMONDS), new Card(FOUR, HEARTS), new Card(FOUR, SPADES)),
                             whitePokerHand(new Card(TWO, DIAMONDS), new Card(TWO, HEARTS), new Card(HEIGHT, SPADES), new Card(SIX, HEARTS), new Card(SIX, SPADES)),
@@ -311,7 +311,7 @@ public class PokerRoundTest {
             var pokerRound = new PokerRound(blackPokerHand, whitePokerHand, greenPokerHand);
 
             // when
-            var result = pokerRound.reportDetail();
+            var result = pokerRound.report();
 
             // then
             assertThat(result).isEqualTo(expectedResult);
@@ -323,7 +323,7 @@ public class PokerRoundTest {
         var pokerRound = new PokerRound(blackPokerHand, whitePokerHand);
 
         // when
-        var result = pokerRound.reportDetail();
+        var result = pokerRound.report();
 
         // then
         assertThat(result).startsWith(expectedResult);

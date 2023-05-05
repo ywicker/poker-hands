@@ -15,20 +15,19 @@ public record PokerResult(Set<PokerHand> playerListWins) {
 
     public String report() {
         Stream<String> playersWinsStream = playerListWins.stream().map(PokerHand::player).map(Player::name);
+        var bestComposition = playerListWins.stream().findAny().get().bestCombinaison;
         if(playerListWins.size() == 1) {
-            return playersWinsStream.findAny().get() + " wins";
+            return playersWinsStream.findAny().get() + " wins"
+                    + reportDetail(bestComposition);
         }
-        return "Egality between : " + playersWinsStream.sorted().collect(Collectors.joining(" and "));
+        return "Egality between : "
+                + playersWinsStream.sorted().collect(Collectors.joining(" and "))
+                + reportDetail(bestComposition);
     }
 
-    public String reportDetail() {
-        return report() + detail(playerListWins.stream().findAny().get());
-    }
-
-    private String detail(PokerHand pokerHand) {
-        Combination bestCombinaison = pokerHand.bestCombinaison;
+    private String reportDetail(Combination bestCombinaison) {
         Optional<Comparable> lessCombinationCardValues = bestCombinaison.lessCombinationCardValues();
-        String over = lessCombinationCardValues.isPresent() ? " over " + lessCombinationCardValues.get().toString() : "";
+        String over = lessCombinationCardValues.isPresent() ? " over " + lessCombinationCardValues.get() : "";
         return " - with " + bestCombinaison.value().label + ": "
                 + bestCombinaison.cardValueComparator().toString()
                 + over;
